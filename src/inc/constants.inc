@@ -6,7 +6,7 @@ PPU_CTRL    = $2000         ; Controls PPU rendering.
                             ; 7 (MSB)   Trigger NMI every frame
                             ; 6         
                             ; 5         
-                            ; 4         
+                            ; 4         Sprite pattern table     
                             ; 3         
                             ; 2         
                             ; 1         
@@ -28,7 +28,15 @@ PPU_DATA    = $2007         ; Data to write at PPUADDR in PPU memory
 ;
 ; These are values used to set different modes for PPU_MASK.
 ;
+MASK_RESET      = %00000000     ; Disable everything
 MASK_STANDARD   = %00011110     ; Enable FG/BG/LEFG/LEBG
+
+; PPU_CTRL Preset Constants
+;
+; These are values used to set different modes for PPU_CTRL.
+;
+CTRL_RESET      = %00000000     ; Disable everything
+CTRL_STANDARD   = %10010000     ; Enable NMI, sprites use first pattern table
 
 ; OAM Constants
 ;
