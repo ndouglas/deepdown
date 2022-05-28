@@ -12,5 +12,5 @@
 
 .export irq_handler
 .proc irq_handler
-  RTI                   ; Return to original context
+  RTI                   ; Return to original context.
 .endproc

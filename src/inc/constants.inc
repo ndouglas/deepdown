@@ -3,7 +3,7 @@
 ; The Picture-Processing Unit (PPU) is TL;DR: the GPU.
 ;
 PPU_CTRL    = $2000         ; Controls PPU rendering.
-                            ; 7 (MSB)   Trigger NMI every frame
+                            ; 7 (MSB)   Trigger NMI every frame.
                             ; 6         
                             ; 5         
                             ; 4         Sprite pattern table     
@@ -12,38 +12,38 @@ PPU_CTRL    = $2000         ; Controls PPU rendering.
                             ; 1         
                             ; 0 (LSB)   
 PPU_MASK    = $2001         ; Instructs PPU on how to draw.
-                            ; 7 (MSB)   Emphasize Blue channel
-                            ; 6         Emphasize Green channel
-                            ; 5         Emphasize Red channel
-                            ; 4         Foreground enable
-                            ; 3         Background enable
-                            ; 2         Left edge (8px) foreground enable
-                            ; 1         Left edge (8px) background enable
-                            ; 0 (LSB)   Greyscale mode enable
-PPU_STATUS  = $2002         ; (RO) PPU status, resets PPUADDR address latch
-PPU_ADDR    = $2006         ; Select address in PPU memory to write PPUDATA
-PPU_DATA    = $2007         ; Data to write at PPUADDR in PPU memory
+                            ; 7 (MSB)   Emphasize Blue channel.
+                            ; 6         Emphasize Green channel.
+                            ; 5         Emphasize Red channel.
+                            ; 4         Enable foreground.
+                            ; 3         Enable background.
+                            ; 2         Enable foreground Left edge (8px).
+                            ; 1         Enable background Left edge (8px).
+                            ; 0 (LSB)   Enable greyscale mode.
+PPU_STATUS  = $2002         ; (RO) PPU status, resets PPUADDR address latch.
+PPU_ADDR    = $2006         ; Select address in PPU memory to write PPUDATA.
+PPU_DATA    = $2007         ; Data to write at PPUADDR in PPU memory.
 
 ; PPU_MASK Preset Constants
 ;
 ; These are values used to set different modes for PPU_MASK.
 ;
-MASK_RESET      = %00000000     ; Disable everything
-MASK_STANDARD   = %00011110     ; Enable FG/BG/LEFG/LEBG
+MASK_RESET      = %00000000     ; Disable everything.
+MASK_STANDARD   = %00011110     ; Enable FG/BG/LEFG/LEBG.
 
 ; PPU_CTRL Preset Constants
 ;
 ; These are values used to set different modes for PPU_CTRL.
 ;
-CTRL_RESET      = %00000000     ; Disable everything
-CTRL_STANDARD   = %10010000     ; Enable NMI, sprites use first pattern table
+CTRL_RESET      = %00000000     ; Disable everything.
+CTRL_STANDARD   = %10010000     ; Enable NMI, sprites use first pattern table.
 
 ; OAM Constants
 ;
 ; Object Attribute Memory (OAM) is where sprites are stored.
 ;
-OAM_ADDR    = $2003         ; Select address in OAM memory to write
-OAM_DMA     = $4014         ; (WO) Initiate writing a page to OAM DMA
+OAM_ADDR    = $2003         ; Select address in OAM memory to write.
+OAM_DMA     = $4014         ; (WO) Initiate writing a page to OAM DMA.
 
 ; Color Constants
 ;
