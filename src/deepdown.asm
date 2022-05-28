@@ -1,5 +1,5 @@
-.include "constants.inc"
-.include "header.inc"
+.include "inc/constants.inc"
+.include "inc/header.inc"
 
 .segment "CODE"
 

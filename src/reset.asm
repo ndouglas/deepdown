@@ -1,4 +1,4 @@
-.include "constants.inc"
+.include "inc/constants.inc"
 
 .segment "CODE"
 
