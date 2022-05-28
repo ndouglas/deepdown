@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
-ca65 src/deepdown.asm -o build/deepdown.o;
-ca65 src/reset.asm -o build/reset.o;
-ld65 build/deepdown.o build/reset.o -C nes.cfg -o build/deepdown.nes;
+for asm_file in src/*.asm; do
+    asm_basename="$(basename "${asm_file}" '.asm')";
+    ca65 "${asm_file}" -o "./build/${asm_basename}.o";
+done;
+ld65 build/*.o -C nes.cfg -o build/deepdown.nes;

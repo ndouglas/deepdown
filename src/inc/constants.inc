@@ -1,5 +1,7 @@
 ; PPU Constants
-
+;
+; The Picture-Processing Unit (PPU) is TL;DR: the GPU.
+;
 PPU_CTRL    = $2000         ; Controls PPU rendering.
                             ; 7 (MSB)   Trigger NMI every frame
                             ; 6         
@@ -22,29 +24,45 @@ PPU_STATUS  = $2002         ; (RO) PPU status, resets PPUADDR address latch
 PPU_ADDR    = $2006         ; Select address in PPU memory to write PPUDATA
 PPU_DATA    = $2007         ; Data to write at PPUADDR in PPU memory
 
-; Color Constants
+; PPU_MASK Preset Constants
+;
+; These are values used to set different modes for PPU_MASK.
+;
+MASK_STANDARD   = %00011110     ; Enable FG/BG/LEFG/LEBG
 
+; OAM Constants
+;
+; Object Attribute Memory (OAM) is where sprites are stored.
+;
+OAM_ADDR    = $2003         ; Select address in OAM memory to write
+OAM_DMA     = $4014         ; (WO) Initiate writing a page to OAM DMA
+
+; Color Constants
+;
 ; Only the 52 unique/safe colors (of 64 possible) are included.
+;
 ; We exclude:
 ; - "forbidden greyscale" ($0D, $1D, $2D, $3D)
 ; - the white at $20 (identical to $30)
 ; - all blacks identical to $0F ($0E*, $1F, $2F, $3F)
+;
 ; The columns run:
-; $x0: Gray
-; $x1: Azure
-; $x2: Blue
-; $x3: Violet
-; $x4: Magenta
-; $x5: Rose
-; $x6: Red or maroon
-; $x7: Orange
-; $x8: Yellow or olive
-; $x9: Chartreuse
-; $xA: Green
-; $xB: Spring
-; $xC: Cyan
+; - $x0: Gray
+; - $x1: Azure
+; - $x2: Blue
+; - $x3: Violet
+; - $x4: Magenta
+; - $x5: Rose
+; - $x6: Red or maroon
+; - $x7: Orange
+; - $x8: Yellow or olive
+; - $x9: Chartreuse
+; - $xA: Green
+; - $xB: Spring
+; - $xC: Cyan
+;
 ; The scale runs from 0-3, dark/medium/light/pale.
-
+;
 BLACK               = $0F       ; Classic black
 WHITE               = $30       ; Classic white
 DARK_GRAY           = $00       ; e.g. _Dragon Quest_ mountains
