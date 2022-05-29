@@ -37,15 +37,19 @@ sprites:
 .byte $70, $06, %00000010, $88    
 .byte $78, $07, %00000010, $80    
 .byte $78, $08, %00000010, $88    
+.byte $80, $09, %00000010, $80    
+.byte $80, $0A, %00000010, $88    
 
 .segment "ZEROPAGE"
-player_x: .res 1            ; Reserve a byte for the player's X coordinate.
-player_y: .res 1            ; Reserve a byte for the player's Y coordinate.
-player_dir: .res 1          ; The direction in which the player is moving.
+player_x: .res 1                ; Reserve a byte for the player's X coordinate.
+player_y: .res 1                ; Reserve a byte for the player's Y coordinate.
+player_dir: .res 1              ; The direction in which the player is moving.
+player_sprite: .res 1           ; The location at which the player sprite tiles start.
 
-.exportzp player_x          ; Export player_x byte.
-.exportzp player_y          ; Export player_y byte.
-.exportzp player_dir        ; Explore player_dir byte.
+.exportzp player_x              ; Export player_x byte.
+.exportzp player_y              ; Export player_y byte.
+.exportzp player_dir            ; Export player_dir byte.
+.exportzp player_sprite         ; Export player_sprite byte.
 
 .segment "CODE"         ; Start of code segment.
 
@@ -65,15 +69,6 @@ load_palettes:              ; Load our color palettes.
   INX                       ; Increment X.
   CPX #$20                  ; Are we at the end of the palettes?
   BNE load_palettes         ; If not, continue looping.
-
-; Load sprites.
-  LDX #$00                  ; X = 00
-load_sprites:               ; Load our sprites.
-  LDA sprites, X            ; A = 'sprites' + X             
-  STA $0200, X              ; Set sprite data at 'sprites' + X.
-  INX                       ; Increment X.
-  CPX #$10                  ; Are we at the end of the sprite?
-  BNE load_sprites          ; If not, continue looping.
 
 vblankwait:                 ; Wait for another vblank before continuing.
   BIT PPU_STATUS            ;
@@ -119,7 +114,6 @@ vblankwait:                 ; Wait for another vblank before continuing.
   STA PPU_ADDR
   LDA #%01000000
   STA PPU_DATA
-
 
 forever:
   JMP forever               ; Loop, lol.

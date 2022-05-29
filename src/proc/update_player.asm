@@ -15,7 +15,8 @@
 
 .export update_player
 .proc update_player
-  ; Save the registers.
+; Save the registers.
+enter:
   PHP                       ; Save the processor status register.
   PHA                       ; Save the accumulator register.
   TXA                       ; Transfer X -> A register.
