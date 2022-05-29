@@ -8,7 +8,9 @@
 ; This should be used to restore the state of the entire machine to default.
 
 .segment "ZEROPAGE"
-.importzp player_x, player_y
+.importzp player_x            ; The player's sprite's top-left x coordinate.
+.importzp player_y            ; The player's sprite's top-left y coordinate.
+.importzp player_sprite       ; The player's sprite's tile index.
 
 .segment "CODE"               ; Start of code segment.
 
@@ -35,15 +37,18 @@ clear_oam:
   INX                         ; Increment X.
   BNE clear_oam               ; Until X == A.
 
-vblankwait:
+vblank_wait:
   BIT PPU_STATUS              ;
-  BPL vblankwait              ; 
+  BPL vblank_wait             ; 
 
-  ; initialize zero-page values
-  LDA #$80
-  STA player_x
-  LDA #$a0
-  STA player_y
+; initialize zero-page values
+initialize_zero_page:
+  LDA #$80                    ; A = #$80
+  STA player_x                ; player_x = #$80
+  LDA #$a0                    ; A = #$a0
+  STA player_y                ; player_y = #$a0
+  LDA #$05                    ; A = #$05
+  STA player_sprite           ; player_sprite = #$05
 
   JMP main                    ; Start our game! :)
 .endproc

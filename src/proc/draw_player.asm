@@ -4,10 +4,14 @@
 ;
 ; This procedure draws the player sprite.
 
+.segment "RODATA"
+.import identity_table      ; Import the Identity Table.
+
 .segment "ZEROPAGE"
 .importzp player_x          ; Import player_x byte.
 .importzp player_y          ; Import player_y byte.
 .importzp player_sprite     ; Import player_sprite byte.
+.importzp player_dir        ; Import player_dir byte.
 
 .segment "CODE"             ; Start of code segment.
 
@@ -24,23 +28,69 @@ enter:
   TYA                       ; Transfer Y -> A register.
   PHA                       ; Save the Y register.
 
-; Draw player tiles.
-write_player_tile_numbers:
-  LDA #$05                  ; Tile 1...
-  STA $0201                 ; ... goes in $0201.
-  LDA #$06                  ; Tile 2...
-  STA $0205                 ; ... goes in $0205.
-  LDA #$07                  ; Tile 3...
-  STA $0209                 ; ... goes in $0209.
-  LDA #$08                  ; Tile 4...
-  STA $020d                 ; ... goes in $020d.
-  LDA #$09                  ; Tile 5...
-  STA $0211                 ; ... goes in $0211.
-  LDA #$0A                  ; Tile 6...
-  STA $0215                 ; ... goes in $0215.
+; Calculate the direction of movement.
+get_direction:
+  LDA player_dir                     ; A = player_dir
+  CMP #$01                           ; If player_dir == 1...
+  BEQ write_player_tiles_right_pre   ; ...player is moving right.
+                                     ; Fall through.
 
-  ; write player ship tile attributes
+; Draw player tiles.
+  LDX #$00                          ; X = 00
+  LDA player_sprite                 ; A = player_sprite
+write_player_tiles_left:
+  STA $0201                         ; ... goes in $0201.
+  CLC                               ; Clear carry bit.
+  ADC #$01                          ; Increment A.
+  STA $0205                         ; ... goes in $0205.
+  CLC                               ; Clear carry bit.
+  ADC #$01                          ; Increment A.
+  STA $0209                         ; ... goes in $0209.
+  CLC                               ; Clear carry bit.
+  ADC #$01                          ; Increment A.
+  STA $020d                         ; ... goes in $020d.
+  CLC                               ; Clear carry bit.
+  ADC #$01                          ; Increment A.
+  STA $0211                         ; ... goes in $0211.
+  CLC                               ; Clear carry bit.
+  ADC #$01                          ; Increment A.
+  STA $0215                         ; ... goes in $0215.
+  JMP set_palette                   ; Set the sprite palette.
+
+; Draw player tiles.
+write_player_tiles_right_pre:       
+  LDX #$00                          ; X = 00
+  LDA player_sprite                 ; A = player_sprite (#$05)
+write_player_tiles_right:       
+  CLC                               ; Clear carry bit.
+  ADC #$01                          ; Increment A. (#$06)
+  STA $0201                         ; ... goes in $0201.
+  CLC                               ; Clear carry bit.
+  SBC #$00                          ; Decrement A. (#$05)
+  STA $0205                         ; ... goes in $0205.
+  CLC                               ; Clear carry bit.
+  ADC #$03                          ; Add 3 to A.  (#$08)
+  STA $0209                         ; ... goes in $0209.
+  CLC                               ; Clear carry bit.
+  SBC #$00                          ; Decrement A. (#$07)
+  STA $020d                         ; ... goes in $020d.
+  CLC                               ; Clear carry bit.
+  ADC #$03                          ; Add 3 to A. (#$0A)
+  STA $0211                         ; ... goes in $0211.
+  CLC                               ; Clear carry bit.
+  SBC #$00                          ; Decrement A. (#$09)
+  STA $0215                         ; ... goes in $0215.
+  JMP set_palette_right             ; Set the sprite palette.
+
+; Special attribute flags:
+; 7 (MSB)     Flips sprite vertically (if 1)
+; 6           Flips sprite horizontally (if 1)
+; 5           Sprite priority (behind background if 1)
+; 4-2         Not used
+; 1-0 (LSB)   Sprite palette
+
   ; use palette 0
+set_palette:
   LDA #$00
   STA $0202
   STA $0206
@@ -48,6 +98,17 @@ write_player_tile_numbers:
   STA $020e
   STA $0212
   STA $0216
+  JMP write_player_tile_locations   ; Set the player tile locations.
+  ; use palette 0
+set_palette_right:
+  LDA #%01000000                    ; Flip the sprite horizontally.
+  STA $0202
+  STA $0206
+  STA $020a
+  STA $020e
+  STA $0212
+  STA $0216
+                                    ; Fall through.
 
   ; Write player tile locations.
 write_player_tile_locations:
@@ -71,7 +132,6 @@ write_player_tile_locations:
   ADC #$08                    ; A = player_y + 8
   STA $0208                   ; $0200 + 8 = player_y + 8
   LDA player_x                ; A = player_x
-  CLC                         ; Clear the carry bit.
   STA $020b                   ; $0203 + 8 = player_x 
 
   ; middle right tile (x + 8, y + 8)
@@ -90,7 +150,6 @@ write_player_tile_locations:
   ADC #$10                    ; A = player_y + 16
   STA $0210                   ; $0200 + 16 = player_y + 16
   LDA player_x                ; A = player_x
-  CLC                         ; Clear the carry bit.
   STA $0213                   ; $0203 + 16 = player_x
 
   ; bottom right tile (x + 8, y + 16)
