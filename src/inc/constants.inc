@@ -2,27 +2,30 @@
 ;
 ; The Picture-Processing Unit (PPU) is TL;DR: the GPU.
 ;
-PPU_CTRL    = $2000         ; Controls PPU rendering.
-                            ; 7 (MSB)   Trigger NMI every frame.
-                            ; 6         
-                            ; 5         
-                            ; 4         Sprite pattern table     
-                            ; 3         
-                            ; 2         
-                            ; 1         
-                            ; 0 (LSB)   
-PPU_MASK    = $2001         ; Instructs PPU on how to draw.
-                            ; 7 (MSB)   Emphasize Blue channel.
-                            ; 6         Emphasize Green channel.
-                            ; 5         Emphasize Red channel.
-                            ; 4         Enable foreground.
-                            ; 3         Enable background.
-                            ; 2         Enable foreground Left edge (8px).
-                            ; 1         Enable background Left edge (8px).
-                            ; 0 (LSB)   Enable greyscale mode.
-PPU_STATUS  = $2002         ; (RO) PPU status, resets PPUADDR address latch.
-PPU_ADDR    = $2006         ; Select address in PPU memory to write PPUDATA.
-PPU_DATA    = $2007         ; Data to write at PPUADDR in PPU memory.
+PPU_CTRL        = $2000         ; Controls PPU rendering.
+                                ; 7 (MSB)   Trigger NMI every frame.
+                                ; 6         
+                                ; 5         
+                                ; 4         Sprite pattern table     
+                                ; 3         
+                                ; 2         
+                                ; 1         
+                                ; 0 (LSB)   
+PPU_MASK        = $2001         ; Instructs PPU on how to draw.
+                                ; 7 (MSB)   Emphasize Blue channel.
+                                ; 6         Emphasize Green channel.
+                                ; 5         Emphasize Red channel.
+                                ; 4         Enable foreground.
+                                ; 3         Enable background.
+                                ; 2         Enable foreground Left edge (8px).
+                                ; 1         Enable background Left edge (8px).
+                                ; 0 (LSB)   Enable greyscale mode.
+PPU_STATUS      = $2002         ; (RO) PPU status, resets PPUADDR address latch.
+PPU_SPR_ADDR    = $2003         ;
+PPU_SPR_DATA    = $2004         ;
+PPU_SCROLL      = $2005         ;
+PPU_ADDR        = $2006         ; Select address in PPU memory to write PPUDATA.
+PPU_DATA        = $2007         ; Data to write at PPUADDR in PPU memory.
 
 ; PPU_MASK Preset Constants
 ;

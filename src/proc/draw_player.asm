@@ -65,20 +65,20 @@ set_tiles_r:
   CLC                               ; Clear carry bit.
   ADC #$01                          ; Increment A. (#$06)
   STA $0201                         ; ... goes in $0201.
-  CLC                               ; Clear carry bit.
-  SBC #$00                          ; Decrement A. (#$05)
+  SEC                               ; Set carry bit.
+  SBC #$01                          ; Decrement A. (#$05)
   STA $0205                         ; ... goes in $0205.
   CLC                               ; Clear carry bit.
   ADC #$03                          ; Add 3 to A.  (#$08)
   STA $0209                         ; ... goes in $0209.
-  CLC                               ; Clear carry bit.
-  SBC #$00                          ; Decrement A. (#$07)
+  SEC                               ; Set carry bit.
+  SBC #$01                          ; Decrement A. (#$07)
   STA $020d                         ; ... goes in $020d.
   CLC                               ; Clear carry bit.
   ADC #$03                          ; Add 3 to A. (#$0A)
   STA $0211                         ; ... goes in $0211.
-  CLC                               ; Clear carry bit.
-  SBC #$00                          ; Decrement A. (#$09)
+  SEC                               ; Set carry bit.
+  SBC #$01                          ; Decrement A. (#$09)
   STA $0215                         ; ... goes in $0215.
   JMP set_flags_r                   ; Set the sprite palette.
 
