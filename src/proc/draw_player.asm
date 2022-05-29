@@ -32,13 +32,13 @@ enter:
 get_direction:
   LDA player_dir                     ; A = player_dir
   CMP #$01                           ; If player_dir == 1...
-  BEQ write_player_tiles_right_pre   ; ...player is moving right.
+  BEQ set_tiles_r_pre                ; ...player is moving right.
                                      ; Fall through.
 
 ; Draw player tiles.
   LDX #$00                          ; X = 00
   LDA player_sprite                 ; A = player_sprite
-write_player_tiles_left:
+set_tiles_l:
   STA $0201                         ; ... goes in $0201.
   CLC                               ; Clear carry bit.
   ADC #$01                          ; Increment A.
@@ -55,13 +55,13 @@ write_player_tiles_left:
   CLC                               ; Clear carry bit.
   ADC #$01                          ; Increment A.
   STA $0215                         ; ... goes in $0215.
-  JMP set_palette                   ; Set the sprite palette.
+  JMP set_flags_l                   ; Set the sprite palette.
 
 ; Draw player tiles.
-write_player_tiles_right_pre:       
+set_tiles_r_pre:       
   LDX #$00                          ; X = 00
   LDA player_sprite                 ; A = player_sprite (#$05)
-write_player_tiles_right:       
+set_tiles_r:       
   CLC                               ; Clear carry bit.
   ADC #$01                          ; Increment A. (#$06)
   STA $0201                         ; ... goes in $0201.
@@ -80,7 +80,7 @@ write_player_tiles_right:
   CLC                               ; Clear carry bit.
   SBC #$00                          ; Decrement A. (#$09)
   STA $0215                         ; ... goes in $0215.
-  JMP set_palette_right             ; Set the sprite palette.
+  JMP set_flags_r                   ; Set the sprite palette.
 
 ; Special attribute flags:
 ; 7 (MSB)     Flips sprite vertically (if 1)
@@ -89,8 +89,7 @@ write_player_tiles_right:
 ; 4-2         Not used
 ; 1-0 (LSB)   Sprite palette
 
-  ; use palette 0
-set_palette:
+set_flags_l:
   LDA #$00
   STA $0202
   STA $0206
@@ -98,9 +97,9 @@ set_palette:
   STA $020e
   STA $0212
   STA $0216
-  JMP write_player_tile_locations   ; Set the player tile locations.
-  ; use palette 0
-set_palette_right:
+  JMP draw_sprite   ; Set the player tile locations.
+
+set_flags_r:
   LDA #%01000000                    ; Flip the sprite horizontally.
   STA $0202
   STA $0206
@@ -111,7 +110,7 @@ set_palette_right:
                                     ; Fall through.
 
   ; Write player tile locations.
-write_player_tile_locations:
+draw_sprite:
   ; top left tile:
   LDA player_y                ; A = player_y (top-left tile)
   STA $0200                   ; $0200 = player_y
