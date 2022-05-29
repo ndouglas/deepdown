@@ -123,3 +123,18 @@ DARK_CYAN           = $0C       ; e.g. _Dragon Quest_ slime
 MEDIUM_CYAN         = $1C       ; 
 LIGHT_CYAN          = $2C       ; 
 PALE_CYAN           = $3C       ;
+
+; Positional Constants
+;
+; The NES has 256 columns but only 240 rows.
+;
+X_MAX               = $ff       ; 256 columns.
+Y_MAX               = $ef       ; 240 rows.
+X_MAX_SPRITE        = $e0       ; This is the rightmost X coordinate of the
+                                ; sprite (256 - 16).
+Y_MAX_SPRITE        = $d0       ; This is the bottommost Y coordinate of the
+                                ; sprite (240 - 16).
+X_MIN_SPRITE        = $10       ; This is the leftmost X coordinate of the
+                                ; sprite (0 + 16).
+Y_MIN_SPRITE        = $10       ; This is the topmost Y coordinate of the
+                                ; sprite (0 + 16).

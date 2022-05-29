@@ -16,13 +16,24 @@
 
 .segment "CODE"             ; Start of code segment.
 
-.import main
+.import main                ; Import the main procedure.
+.import draw_player         ; Import the draw_player procedure.
+.import update_player       ; Import the update_player procedure.
 
-.export nmi_handler
+.export nmi_handler         ; Export the NMI Handler.
 .proc nmi_handler
   LDA #$00                  ; A = 00
   STA OAM_ADDR              ; OAM_ADDR will start at byte zero.
   LDA #$02                  ; A = 02
   STA OAM_DMA               ; Transfer $0200-$02ff to OAM.
+
+  ; update tiles *after* DMA transfer
+  JSR update_player         ; Update the player's position.
+  JSR draw_player           ; Draw the player.
+
+  LDA #$00                  ; A = 00
+  STA $2005                 ; Set scroll position to first nametable.
+  STA $2005                 ; Set scroll position to first nametable, no scrolling.
+
   RTI                       ; Return to original context.
 .endproc
