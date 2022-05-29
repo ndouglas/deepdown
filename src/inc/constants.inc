@@ -141,16 +141,3 @@ X_MIN_SPRITE        = $10       ; This is the leftmost X coordinate of the
                                 ; sprite (0 + 16).
 Y_MIN_SPRITE        = $10       ; This is the topmost Y coordinate of the
                                 ; sprite (0 + 16).
-
-; Player Sprite Constants
-;
-; This is intended to help abstract out drawing the player sprite a bit.
-;
-PLAYER_SPRITE_SIZE    = $06     ; The player sprite is 6 tiles.
-PLAYER_SPRITE_WIDTH   = $02     ; The player sprite is 2 tiles wide.
-PLAYER_SPRITE_HEIGHT  = $03     ; The player sprite is 3 tiles high.
-
-; Directional Constants
-;
-; 
-;
