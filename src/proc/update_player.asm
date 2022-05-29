@@ -29,9 +29,10 @@ is_at_right_edge:
   LDA player_x              ; A = player_x
   CMP #X_MAX_SPRITE         ; Are we at or past the right edge of the screen?
   BCC not_at_right_edge     ; If not, jump.
+                            ; Fall through.
 
 ; Force player to move left.
-set_move_direction_left:
+set_dir_left:
   LDA #$00                  ; A = 0
   STA player_dir            ; player_dir = 0; move LEFT.
   JMP get_direction         ; Now 
@@ -41,9 +42,10 @@ not_at_right_edge:
   LDA player_x              ; A = player_x
   CMP #X_MIN_SPRITE         ; Are we at or past the left edge of the screen?
   BCS get_direction         ; If not, jump.
+                            ; Fall through.
 
 ; Force player to move right.
-set_move_direciton_right:
+set_dir_right:
   LDA #$01                  ; A = 1
   STA player_dir            ; player_dir = 1; move RIGHT.
                             ; Fall through.

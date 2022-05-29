@@ -28,12 +28,15 @@
   STA OAM_DMA               ; Transfer $0200-$02ff to OAM.
 
   ; update tiles *after* DMA transfer
+handle_player:
   JSR update_player         ; Update the player's position.
   JSR draw_player           ; Draw the player.
 
+set_scroll:
   LDA #$00                  ; A = 00
-  STA $2005                 ; Set scroll position to first nametable.
-  STA $2005                 ; Set scroll position to first nametable, no scrolling.
+  STA PPU_SCROLL            ; Set scroll position to first nametable.
+  STA PPU_SCROLL            ; Set scroll position to first nametable, no scrolling.
 
+exit:
   RTI                       ; Return to original context.
 .endproc
