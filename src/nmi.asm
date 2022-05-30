@@ -17,8 +17,9 @@
 .segment "CODE"             ; Start of code segment.
 
 .import main                ; Import the main procedure.
-.import draw_player         ; Import the draw_player procedure.
+.import read_input          ; Import the read_input procedure.
 .import update_player       ; Import the update_player procedure.
+.import draw_player         ; Import the draw_player procedure.
 
 .export nmi_handler         ; Export the NMI Handler.
 .proc nmi_handler
@@ -29,6 +30,7 @@
 
   ; update tiles *after* DMA transfer
 handle_player:
+  JSR read_input            ; Read the player's input.
   JSR update_player         ; Update the player's position.
   JSR draw_player           ; Draw the player.
 

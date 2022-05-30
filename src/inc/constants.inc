@@ -154,3 +154,19 @@ X_MIN_SPRITE        = $10       ; This is the leftmost X coordinate of the
                                 ; sprite (0 + 16).
 Y_MIN_SPRITE        = $10       ; This is the topmost Y coordinate of the
                                 ; sprite (0 + 16).
+
+; Input/Output Constants
+;
+;
+;
+
+IO_PLAYER1          = $4016       ; Player One controller.
+IO_PLAYER2          = $4017       ; Player Two controller.
+IO_PLAYER_A         = %10000000   ; Button A.
+IO_PLAYER_B         = %01000000   ; Button B.
+IO_PLAYER_SELECT    = %00100000   ; Select.
+IO_PLAYER_START     = %00010000   ; Start.
+IO_PLAYER_UP        = %00001000   ; Up.
+IO_PLAYER_DOWN      = %00000100   ; Down.
+IO_PLAYER_LEFT      = %00000010   ; Left.
+IO_PLAYER_RIGHT     = %00000001   ; Right.
