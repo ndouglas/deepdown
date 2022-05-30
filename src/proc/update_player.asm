@@ -4,14 +4,11 @@
 ;
 ; This procedure updates the location of the player sprite.
 
-.segment "ZEROPAGE"
 .importzp player_x          ; Import player_x byte.
 .importzp player_y          ; Import player_y byte.
 .importzp player_dir        ; Import player_dir byte.
 
 .segment "CODE"             ; Start of code segment.
-
-.import main                ; Import main procedure.
 
 .export update_player
 .proc update_player

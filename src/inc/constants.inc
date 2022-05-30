@@ -2,6 +2,7 @@
 ;
 ; The Picture-Processing Unit (PPU) is TL;DR: the GPU.
 ;
+
 PPU_CTRL        = $2000         ; Controls PPU rendering.
                                 ; 7 (MSB)   Trigger NMI every frame.
                                 ; 6         
@@ -31,6 +32,7 @@ PPU_DATA        = $2007         ; Data to write at PPUADDR in PPU memory.
 ;
 ; These are values used to set different modes for PPU_MASK.
 ;
+
 MASK_RESET      = %00000000     ; Disable everything.
 MASK_STANDARD   = %00011110     ; Enable FG/BG/LEFG/LEBG.
 
@@ -38,6 +40,7 @@ MASK_STANDARD   = %00011110     ; Enable FG/BG/LEFG/LEBG.
 ;
 ; These are values used to set different modes for PPU_CTRL.
 ;
+
 CTRL_RESET      = %00000000     ; Disable everything.
 CTRL_STANDARD   = %10010000     ; Enable NMI, sprites use first pattern table.
 
@@ -45,8 +48,16 @@ CTRL_STANDARD   = %10010000     ; Enable NMI, sprites use first pattern table.
 ;
 ; Object Attribute Memory (OAM) is where sprites are stored.
 ;
+
 OAM_ADDR    = $2003         ; Select address in OAM memory to write.
 OAM_DMA     = $4014         ; (WO) Initiate writing a page to OAM DMA.
+
+; Vector Location Constants
+;
+
+VECTOR_NMI    = $FFFA       ; Non-Maskable Interrupt (NMI) Handler
+VECTOR_RST    = $FFFC       ; Reset (RST) Handler 
+VECTOR_IRQ    = $FFFE       ; Interrupt Request (IRQ) Handler
 
 ; Color Constants
 ;
@@ -74,6 +85,7 @@ OAM_DMA     = $4014         ; (WO) Initiate writing a page to OAM DMA.
 ;
 ; The scale runs from 0-3, dark/medium/light/pale.
 ;
+
 BLACK               = $0F       ; Classic black
 WHITE               = $30       ; Classic white
 DARK_GRAY           = $00       ; e.g. _Dragon Quest_ mountains
@@ -131,6 +143,7 @@ PALE_CYAN           = $3C       ;
 ;
 ; The NES has 256 columns but only 240 rows.
 ;
+
 X_MAX               = $ff       ; 256 columns.
 Y_MAX               = $ef       ; 240 rows.
 X_MAX_SPRITE        = $e0       ; This is the rightmost X coordinate of the

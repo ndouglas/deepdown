@@ -1,5 +1,3 @@
-.include "inc/constants.inc"
-
 ; The Non-Maskable Interrupt (NMI) Handler
 ;
 ; The NES uses NMI events every time the PPU enters VBLANK.
@@ -13,6 +11,8 @@
 ; This makes it the best time to perform graphical updates.
 ;
 ; This needs to run in ~1250 milioseconds, or 0.00125 seconds.
+
+.include "inc/constants.inc"
 
 .segment "CODE"             ; Start of code segment.
 

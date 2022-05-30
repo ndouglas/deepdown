@@ -1,13 +1,9 @@
-.include "../inc/constants.inc"
-
 ; Draw Player
 ;
 ; This procedure draws the player sprite.
 
-.segment "RODATA"
-.import identity_table      ; Import the Identity Table.
+.include "../inc/constants.inc"
 
-.segment "ZEROPAGE"
 .importzp player_x          ; Import player_x byte.
 .importzp player_y          ; Import player_y byte.
 .importzp player_sprite     ; Import player_sprite byte.

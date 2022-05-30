@@ -1,5 +1,3 @@
-.include "inc/constants.inc"
-
 ; The Reset Handler
 ;
 ; The NES uses reset events whenever the NES is powered on or reset using the
@@ -7,13 +5,14 @@
 ;
 ; This should be used to restore the state of the entire machine to default.
 
+.include "inc/constants.inc"
+
 .segment "ZEROPAGE"
 .importzp player_x            ; The player's sprite's top-left x coordinate.
 .importzp player_y            ; The player's sprite's top-left y coordinate.
 .importzp player_sprite       ; The player's sprite's tile index.
 
 .segment "CODE"               ; Start of code segment.
-
 .import main
 
 .export reset_handler
